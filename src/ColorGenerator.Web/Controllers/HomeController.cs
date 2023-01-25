@@ -19,14 +19,39 @@ namespace ColorGenerator.Web.Controllers
 
         public IActionResult Index()
         {
+            int divisors = 2;
+            int step = 255 / divisors;
+            List<Rgb24> colors = new();
+            //loop in 3 separate for loops
+            for (int r = 0; r <= 255; r += step)
+            {
+                for (int g = 0; g <= 255; g += step)
+                {
+                    for (int b = 0; b <= 255; b += step)
+                    {
+                        colors.Add(new Rgb24((byte)r, (byte)g, (byte)b));
+                    }
+                }
+            }
+
             //Create the image with the target width and height
             Image<Rgb24> newImage = new(500, 10);
             //Add each pixel
-            for (int i = 0; i < 500; i++)
+            int index = 0;
+            int imageWidth = 500 / colors.Count;
+            for (int x = 0; x < 500; x++)
             {
-                for (int j = 0; j < 10; j++)
+                if (imageWidth * (index + 1) < x)
                 {
-                    newImage[i, j] = new Rgb24(0, 0, 255);
+                    index++;
+                }
+                for (int y = 0; y < 10; y++)
+                {
+                    if (index > colors.Count - 1)
+                    {
+                        index = colors.Count - 1;
+                    }
+                    newImage[x, y] = colors[index];
                 }
             }
 
