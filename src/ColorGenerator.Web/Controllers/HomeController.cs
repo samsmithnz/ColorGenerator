@@ -15,7 +15,8 @@ namespace ColorGenerator.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var image = System.IO.File.OpenRead(Environment.CurrentDirectory + "/wwwroot/images/PuzzlePieces.jpg");
+            return File(image, "image/jpeg");
         }
 
         public IActionResult Privacy()
