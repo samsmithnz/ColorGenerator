@@ -18,8 +18,8 @@ namespace ColorGenerator.Web.Controllers
 
         public IActionResult Index()
         {
-            using var image = Image.Load(Environment.CurrentDirectory + "/wwwroot/images/PuzzlePieces.jpg");
-            using (var ms = new MemoryStream())
+            using Image image = Image.Load(Environment.CurrentDirectory + "/wwwroot/images/PuzzlePieces.jpg");
+            using (MemoryStream ms = new MemoryStream())
             {
                 IImageEncoder encoder = new JpegEncoder();
                 image.Save(ms, encoder);
