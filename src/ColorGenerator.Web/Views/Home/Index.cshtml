@@ -1,13 +1,20 @@
-﻿@model byte[]
+﻿@using SixLabors.ImageSharp.PixelFormats;
+@model IndexModel
 @{
     ViewData["Title"] = "Home Page";
 
-    string image = "data:image/jpg;base64," + Convert.ToBase64String(Model, 0, Model.Length); ;
+    string image = "data:image/jpg;base64," + Convert.ToBase64String(Model.ImageByteArray, 0, Model.ImageByteArray.Length); ;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+Color Palette:<br />
+<img src="@image" style="width: 500px; border-style: solid; border-width: 1px; border-color: darkgray;">
+<br />
 
-<img src="@image" style="width: 500px;">
+Color List: <br />
+@foreach (Rgb24 item in Model.Colors)
+{
+    string hex = "#" + item.R.ToString("X2") + item.G.ToString("X2") + item.B.ToString("X2");
+    <span style="border-style: solid; border-width: 1px; border-color: darkgray; background-color: @hex;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <span>@hex</span>
+    <br />
+}

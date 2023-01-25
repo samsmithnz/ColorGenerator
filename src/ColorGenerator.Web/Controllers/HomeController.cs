@@ -61,7 +61,7 @@ namespace ColorGenerator.Web.Controllers
             {
                 IImageEncoder encoder = new JpegEncoder();
                 image.Save(ms, encoder);
-                return View(ms.ToArray());
+                return View(new IndexModel(ms.ToArray(), colors));
             }
         }
 
