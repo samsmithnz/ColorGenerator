@@ -1,5 +1,8 @@
 ﻿using ColorGenerator.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Formats.Jpeg;
 using System.Diagnostics;
 
 namespace ColorGenerator.Web.Controllers
@@ -15,8 +18,13 @@ namespace ColorGenerator.Web.Controllers
 
         public IActionResult Index()
         {
-            var image = System.IO.File.OpenRead(Environment.CurrentDirectory + "/wwwroot/images/PuzzlePieces.jpg");
-            return File(image, "image/jpeg");
+            using var image = Image.Load(Environment.CurrentDirectory + "/wwwroot/images/PuzzlePieces.jpg");
+            using (var ms = new MemoryStream())
+            {
+                IImageEncoder encoder = new JpegEncoder();
+                image.Save(ms, encoder);
+                return View(ms.ToArray());
+            }
         }
 
         public IActionResult Privacy()

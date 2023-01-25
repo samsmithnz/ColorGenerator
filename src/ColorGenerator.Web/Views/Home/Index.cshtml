@@ -1,8 +1,13 @@
-﻿@{
+﻿@model byte[]
+@{
     ViewData["Title"] = "Home Page";
+
+    string image = "data:image/jpg;base64," + Convert.ToBase64String(Model, 0, Model.Length); ;
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<img src="@image" style="width: 500px;">
